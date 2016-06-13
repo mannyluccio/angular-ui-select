@@ -165,7 +165,8 @@ app.controller('DemoCtrl', function ($scope, $http, $timeout, $interval) {
   ];
 
   vm.availableColors = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
-
+  vm.freeTextDemo = {};
+  vm.freeTextDemo.color = '';
   vm.singleDemo = {};
   vm.singleDemo.color = '';
   vm.multipleDemo = {};

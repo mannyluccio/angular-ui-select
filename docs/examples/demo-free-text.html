@@ -1,0 +1,29 @@
+﻿  <button class="btn btn-default btn-xs" ng-click="ctrl.enable()">Enable ui-select</button>
+  <button class="btn btn-default btn-xs" ng-click="ctrl.disable()">Disable ui-select</button>
+  <button class="btn btn-default btn-xs" ng-click="ctrl.clear()">Clear ng-model</button>
+
+  <h1>Free text</h1>
+  <h3>Regular uiSelect</h3>
+  <p>Without the <code>allow-free-text</code> attribute, it's impossible to enter a non existing item</p>
+  <ui-select ng-model="ctrl.freeTextDemo.color" theme="bootstrap" style="width: 800px;" title="Choose a color">
+    <ui-select-match placeholder="Select color...">{{$select.selected}}</ui-select-match>
+    <ui-select-choices repeat="color in ctrl.availableColors | filter: $select.search">
+      <div ng-bind-html="color | highlight: $select.search"></div>
+    </ui-select-choices>
+  </ui-select>
+  <p>
+  <pre style="width: 800px;">ctrl.freeTextDemo.color = {{ctrl.freeTextDemo.color | json}}</pre>
+  </p>
+
+  <hr>
+  <h3>With free text</h3>
+  <p>Use the <code>allow-free-text</code> attribute to allow non existing item in the box</p>
+  <ui-select allow-free-text="true" ng-model="ctrl.freeTextDemo.color2" theme="bootstrap" style="width: 800px;" title="Choose a color">
+    <ui-select-match placeholder="Select color...">{{$select.selected}}</ui-select-match>
+    <ui-select-choices repeat="color in ctrl.availableColors | filter: $select.search">
+      <div ng-bind-html="color | highlight: $select.search"></div>
+    </ui-select-choices>
+  </ui-select>
+  <p>
+    <pre style="width: 800px;">ctrl.freeTextDemo.color2 = {{ctrl.freeTextDemo.color2 | json}}</pre>
+  </p>
