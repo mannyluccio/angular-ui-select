@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.17.1 - 2016-06-09T20:41:58.363Z
+ * Version: 0.18.0 - 2016-06-14T06:54:43.070Z
  * License: MIT
  */
 
@@ -105,6 +105,7 @@ var uis = angular.module('ui.select', [])
 .constant('uiSelectConfig', {
   theme: 'bootstrap',
   searchEnabled: true,
+  allowFreeText: false,
   sortable: false,
   placeholder: '', // Empty by default, like HTML tag <select>
   refreshDelay: 1000, // In milliseconds
@@ -280,6 +281,7 @@ uis.controller('uiSelectCtrl',
   ctrl.placeholder = uiSelectConfig.placeholder;
   ctrl.searchEnabled = uiSelectConfig.searchEnabled;
   ctrl.sortable = uiSelectConfig.sortable;
+  ctrl.allowFreeText = uiSelectConfig.allowFreeText;
   ctrl.refreshDelay = uiSelectConfig.refreshDelay;
   ctrl.paste = uiSelectConfig.paste;
 
@@ -789,6 +791,18 @@ uis.controller('uiSelectCtrl',
     return processed;
   }
 
+  function _handleBlurAndTab() {
+    if (ctrl.allowFreeText && ctrl.search) { // Make sure that the search is not empty, otherwise the blur event will override the tab keydown event
+      ctrl.select(ctrl.search);
+      ctrl.close();
+      ctrl.search = EMPTY_SEARCH;
+    }
+  }
+
+  ctrl.searchInput.on('blur', function() {
+    _handleBlurAndTab();
+  });
+
   // Bind to keyboard shortcuts
   ctrl.searchInput.on('keydown', function(e) {
 
@@ -798,11 +812,6 @@ uis.controller('uiSelectCtrl',
       e.preventDefault();
       e.stopPropagation();
     }
-
-    // if(~[KEY.ESC,KEY.TAB].indexOf(key)){
-    //   //TODO: SEGURO?
-    //   ctrl.close();
-    // }
 
     $scope.$apply(function() {
 
@@ -829,6 +838,14 @@ uis.controller('uiSelectCtrl',
               if (newItem) ctrl.select(newItem, true);
             });
           }
+        }
+      }
+      else if(~[KEY.ESC,KEY.TAB].indexOf(key)){
+        if (!ctrl.allowFreeText) {
+          ctrl.close();
+        }
+        else {
+          _handleBlurAndTab();
         }
       }
 
@@ -1035,6 +1052,11 @@ uis.directive('uiSelect',
         attrs.$observe('disabled', function() {
           // No need to use $eval() (thanks to ng-disabled) since we already get a boolean instead of a string
           $select.disabled = attrs.disabled !== undefined ? attrs.disabled : false;
+        });
+
+        attrs.$observe('allowFreeText', function(allowFreeText) {
+          // No need to use $eval() (thanks to ng-disabled) since we already get a boolean instead of a string
+          $select.allowFreeText = (angular.isDefined(allowFreeText)) ? (allowFreeText === '') ? true : (allowFreeText.toLowerCase() === 'true') : false;
         });
 
         attrs.$observe('resetSearchInput', function() {
