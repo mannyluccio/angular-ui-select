@@ -52,9 +52,9 @@
     "test": "gulp test"
   },
   "spm": {
-    "main": "dist/select.js",
+    "main": "select.js",
     "output": [
-      "dist/select.css"
+      "select.css"
     ]
   },
   "license": "MIT"
