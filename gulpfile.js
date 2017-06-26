@@ -69,7 +69,7 @@ gulp.task('scripts', ['clean'], function() {
     .pipe($.uglify({preserveComments: 'some'}))
     .pipe($.concat('select.min.js'))
     .pipe($.sourcemaps.write('./'))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('./'));
 
 });
 
@@ -81,11 +81,11 @@ gulp.task('styles', ['clean'], function() {
       timestamp: (new Date()).toISOString(), pkg: config.pkg
     }))
     .pipe($.concat('select.css'))
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('./'))
     .pipe($.minifyCss())
     .pipe($.concat('select.min.css'))
-    .pipe($.sourcemaps.write('../dist', {debug: true}))
-    .pipe(gulp.dest('dist'));
+    .pipe($.sourcemaps.write('../', {debug: true}))
+    .pipe(gulp.dest('./'));
 
 });
 
@@ -164,7 +164,7 @@ gulp.task('docs:clean', function (cb) {
 });
 
 gulp.task('docs:assets', function () {
-  gulp.src('./dist/*').pipe(gulp.dest('./docs-built/dist'));
+  gulp.src('./*').pipe(gulp.dest('./docs-built/'));
   return gulp.src('docs/assets/*').pipe(gulp.dest('./docs-built/assets'));
 });
 
