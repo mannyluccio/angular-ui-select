@@ -820,7 +820,7 @@ uis.controller('uiSelectCtrl',
     if (ctrl.allowFreeText && ctrl.search) { // Make sure that the search is not empty, otherwise the blur event will override the tab keydown event
       ctrl.select(ctrl.search);
       ctrl.close();
-      ctrl.search = EMPTY_SEARCH;
+      //ctrl.search = EMPTY_SEARCH;
     }
   }
 
