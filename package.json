@@ -6,7 +6,7 @@
   "repository": {
     "url": "git://github.com/angular-ui/ui-select.git"
   },
-  "style": "dist/select.css",
+  "style": "select.css",
   "version": "0.18.0",
   "devDependencies": {
     "angular": "^1.2.18",
